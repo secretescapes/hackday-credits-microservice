@@ -1,0 +1,9 @@
+import com.secretescapes.credits.CreditOperation
+
+model {
+	CreditOperation operation
+}
+
+json {
+	redeemOperationToken operation.operationHash
+}

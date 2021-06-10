@@ -14,6 +14,6 @@ class Credit {
 
 	static constraints = {
 		expiresOn nullable: true
-
+		amount min: BigDecimal.ZERO
 	}
 }

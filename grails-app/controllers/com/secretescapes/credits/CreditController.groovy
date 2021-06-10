@@ -22,7 +22,7 @@ class CreditController {
 
 			Currency currency = params.currency ? Currency.getInstance(params.currency) : Currency.getInstance("GBP")
 			BigDecimal amount = creditService.sumAmountOfAvailableCreditsByUserAndCurrency(user, currency)
-			[amount: amount, currency: currency]
+			return [amount: amount, currency: currency]
 		} catch (ex) {
 			log.warn "${controllerName}.${actionName}: throw ${ex.message}", ex
 			render([status: HttpStatus.INTERNAL_SERVER_ERROR])
@@ -44,7 +44,8 @@ class CreditController {
 				render([status: HttpStatus.BAD_REQUEST])
 				return
 			}
-			render([status: HttpStatus.OK])
+			CreditOperation operation = creditService.redeemCredit(user, command)
+			return [operation: operation]
 		} catch (InsufficientAvailableCredit e) {
 			log.info "${controllerName}.${actionName}: throw InsufficientAvailableCredit for User-${user?.id} and ${command.currency}:${command.requestedCreditAmount}"
 			render([status: HttpStatus.CONFLICT])
