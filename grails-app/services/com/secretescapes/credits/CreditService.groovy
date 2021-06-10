@@ -42,30 +42,6 @@ class CreditService {
 			operation.addToCredits(it)
 		}
 
-
-//		BigDecimal remainingAvailable = availableAmount
-//
-//		credits.sort {it.amount}.each {
-//			if (remainingAvailable >= 0) {
-//				if (it.amount < remainingAvailable) {
-//					operation.addToCredits(it)
-//					it.status = CreditStatus.USED
-//					remainingAvailable -= it.amount
-//				} else {
-//					Credit newCredit = new Credit(expiresOn: it.expiresOn)
-//					user.addToCredits(newCredit)
-//					newCredit.amount = it.amount - remainingAvailable
-//					newCredit.save(failOnError: true)
-//					it.amount = remainingAvailable
-//					it.status = CreditStatus.USED
-//					operation.addToCredits(it)
-//					remainingAvailable -= it.amount
-//				}
-//			} else {
-//				return
-//			}
-//		}
-
 		return operation
 	}
 
