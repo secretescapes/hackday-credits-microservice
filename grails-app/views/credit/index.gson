@@ -1,0 +1,9 @@
+model{
+	BigDecimal amount
+	Currency currency
+}
+
+json{
+	amount amount
+	currency currency.toString()
+}
