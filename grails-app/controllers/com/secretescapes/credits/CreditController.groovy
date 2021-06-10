@@ -1,8 +1,5 @@
 package com.secretescapes.credits
 
-
-import grails.rest.*
-import grails.converters.*
 import org.springframework.http.HttpStatus
 
 class CreditController {
@@ -12,7 +9,6 @@ class CreditController {
 
 	def index() {
 		try {
-
 			String userId = request.getHeader("X-userId")
 			User user = User.read(userId)
 			if (!user) {

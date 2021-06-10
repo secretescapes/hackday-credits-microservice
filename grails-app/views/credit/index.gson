@@ -1,9 +1,9 @@
-model{
+model {
 	BigDecimal amount
 	Currency currency
 }
 
-json{
+json {
 	amount amount
 	currency currency.toString()
 }

@@ -2,7 +2,7 @@ package com.secretescapes.credits
 
 class Credit {
 	Date dateCreated
-	Date lastModified
+	Date lastUpdated
 
 	Currency currency = Currency.getInstance("GBP")
 	BigDecimal amount = BigDecimal.ZERO
@@ -13,6 +13,7 @@ class Credit {
 
 
 	static constraints = {
+		expiresOn nullable: true
 
 	}
 }
