@@ -65,6 +65,10 @@ dependencies {
     testCompile "org.grails:grails-web-testing-support"
     testCompile "org.grails:views-json-testing-support"
     testCompile "org.hibernate.validator:hibernate-validator:6.0.20.Final"
+	
+	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.25'
+
 }
 
 bootRun {
