@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   db:
-    image: mysql:8.0.25
+    image: mysql:8.0.23
 # restart: always
     environment:
       MYSQL_DATABASE: 'credits'
