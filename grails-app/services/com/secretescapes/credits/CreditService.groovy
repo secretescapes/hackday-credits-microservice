@@ -10,15 +10,14 @@ class CreditService {
 
 	@NotTransactional
 	List<Credit> findAll(User user, Currency currency, CreditStatus creditStatus) {
-	    List<Credit> credits = Credit.findAllByUserAndCurrencyAndStatus(user, currency, creditStatus)
-	    return  credits
+	    return Credit.findAllByUserAndCurrencyAndStatus(user, currency, creditStatus)
     }
 
 	@NotTransactional
 	BigDecimal sumAmountOfAvailableCreditsByUserAndCurrency(User user, Currency currency){
-		// TODO Check expireOn
 		List<Credit> credits = findAll(user, currency, CreditStatus.AVAILABLE)
-		return credits ? credits.sum {it.amount} : BigDecimal.ZERO
+		Date now = new Date()
+		return credits ? credits.findAll{ !it.expiresOn || it.expiresOn > now }.sum {it.amount} : BigDecimal.ZERO
 	}
 
 	CreditOperation redeemCredit(User user, RedeemCreditCommand command) {

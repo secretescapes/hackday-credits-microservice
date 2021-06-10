@@ -14,9 +14,6 @@ class CreditControllerSpec extends Specification implements ControllerUnitTest<C
 	    mockDomains(User)
     }
 
-	def cleanup() {
-	}
-
 	void "index: get proper amount of credits for specific user and currency"() {
 		given:
 			User user = new User().save(validate: false)

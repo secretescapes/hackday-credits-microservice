@@ -69,6 +69,10 @@ dependencies {
 	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
 	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.25'
 
+	// https://mvnrepository.com/artifact/org.codehaus.groovy/groovy-dateutil
+	implementation group: 'org.codehaus.groovy', name: 'groovy-dateutil', version: '3.0.8'
+
+
 }
 
 bootRun {
