@@ -21,6 +21,23 @@ class CreditServiceSpec extends Specification implements ServiceUnitTest<CreditS
     def cleanup() {
     }
 
+	@Unroll
+	void "sumAmountOfAvailableCreditsByUserAndCurrency: only non expired credits with specific status"() {
+		given:
+			User user = new User(credits: userCredits).save(validate: false)
+
+		expect:
+			expectedAmount == service.sumAmountOfAvailableCreditsByUserAndCurrency(user, Currency.getInstance("GBP"))
+
+		where:
+			userCredits                                                                                                                        || expectedAmount
+			[new Credit(amount: 99)]                                                                                                           || 99
+			[new Credit(amount: 1), new Credit(amount: 1)]                                                                                     || 2
+			[new Credit(amount: 1), new Credit(amount: 1, expiresOn: new Date() - 1)]                                                          || 1
+			[new Credit(amount: 1), new Credit(amount: 1, expiresOn: new Date() + 1)]                                                          || 2
+			[new Credit(amount: 1, status: CreditStatus.USED), new Credit(amount: 1, status: CreditStatus.DELETED, expiresOn: new Date() + 1)] || 0
+	}
+
     void "redeemCredit: if available credit is 0 throw InsufficientAvailableCredit"() {
         given:
 			User user = new User().save(validate: false)

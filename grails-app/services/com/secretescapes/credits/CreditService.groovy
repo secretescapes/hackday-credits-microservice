@@ -9,24 +9,19 @@ import grails.gorm.transactions.Transactional
 class CreditService {
 
 	@NotTransactional
-	List<Credit> findAllNotExpired(User user, Currency currency, CreditStatus creditStatus) {
-	    List<Credit> credits = Credit
-				.findAllByUserAndCurrencyAndStatus(user, currency, creditStatus)
-				.findAll {
-					it.expiresOn ? it.expiresOn.after(new Date()): true
-				}
-	    return  credits
+	List<Credit> findAll(User user, Currency currency, CreditStatus creditStatus) {
+	    return Credit.findAllByUserAndCurrencyAndStatus(user, currency, creditStatus)
     }
 
 	@NotTransactional
 	BigDecimal sumAmountOfAvailableCreditsByUserAndCurrency(User user, Currency currency){
-		// TODO Check expireOn
-		List<Credit> credits = findAllNotExpired(user, currency, CreditStatus.AVAILABLE)
-		return credits ? credits.sum {it.amount} : BigDecimal.ZERO
+		List<Credit> credits = findAll(user, currency, CreditStatus.AVAILABLE)
+		Date now = new Date()
+		return credits ? credits.findAll{ !it.expiresOn || it.expiresOn > now }.sum {it.amount} : BigDecimal.ZERO
 	}
 
 	CreditOperation redeemCredit(User user, RedeemCreditCommand command) {
-		List<Credit> credits = findAllNotExpired(user, command.currency, CreditStatus.AVAILABLE)
+		List<Credit> credits = findAll(user, command.currency, CreditStatus.AVAILABLE)
 		BigDecimal availableAmount = credits ? credits.sum {it.amount} : BigDecimal.ZERO
 		if (availableAmount < command.requestedCreditAmount) {
 			throw new InsufficientAvailableCredit("User does not have enough available credit")
