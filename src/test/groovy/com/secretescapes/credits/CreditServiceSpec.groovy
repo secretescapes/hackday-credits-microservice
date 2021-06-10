@@ -55,13 +55,14 @@ class CreditServiceSpec extends Specification implements ServiceUnitTest<CreditS
 			operation.credits.amount == usedCredits
 		and:
 			// Not sure why the dynamic finder ignores the status if I do findAllByUserAndCurrencyAndStatus
-			Credit.findAllByUserAndCurrency(user, GBP).findAll{it.status == CreditStatus.AVAILABLE}.amount == remainingCreditAmounts
+			Credit.findAllByUserAndCurrency(user, GBP).findAll{it.status == CreditStatus.AVAILABLE}.amount == remainingCreditAmount
 		where:
-			userCredits                                        | requested || usedCredits | remainingCreditAmounts
-			[new Credit(amount: 100)]                          | 100       || [100]       | []
-			[new Credit(amount: 50), new Credit(amount: 50)]   | 100       || [50, 50]    | []
-			[new Credit(amount: 200)]                          | 50        || [50]        | [150]
-//			[new Credit(amount: 100), new Credit(amount: 200)] | 50        || [50]        | [100, 50]
-//			[new Credit(amount: 25), new Credit(amount: 25)]   | 50        || [25, 25]    | []
+			userCredits                                                               | requested || usedCredits | remainingCreditAmount
+			[new Credit(amount: 100)]                                                 | 100       || [100]       | []
+			[new Credit(amount: 50), new Credit(amount: 50)]                          | 100       || [50, 50]    | []
+			[new Credit(amount: 200)]                                                 | 50        || [50]        | [150]
+			[new Credit(amount: 100), new Credit(amount: 200)]                        | 50        || [50]        | [200, 50]
+			[new Credit(amount: 25), new Credit(amount: 25)]                          | 50        || [25, 25]    | []
+			[new Credit(amount: 200), new Credit(amount: 25), new Credit(amount: 25)] | 50        || [25, 25]    | [200]
 	}
 }
