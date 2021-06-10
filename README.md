@@ -7,13 +7,16 @@ The scope and the description of the hackday task: https://docs.google.com/docum
     sdk default gradle 3.5.1;
     sdk default groovy 2.5.7;
     
+    docker-compose up;
+    
 ## Running the webapplication
 
 ### Development
 
 Run from command line in project directory:
 
-`grails run-app`
+`docker-compose start;` #initiates dev MySQL db
+`grails run-app` #starts an application
 
 ### Production on AWS
 
