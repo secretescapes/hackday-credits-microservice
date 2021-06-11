@@ -97,7 +97,7 @@ environments:
             url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     production:
         dataSource:
-          dbCreate: update
+          dbCreate: create-drop
           url: jdbc:mysql://hackday-grails-credit.cr3ylekhexaf.eu-west-1.rds.amazonaws.com:3306/credits
           username: admin
           password: 'mypassword'
