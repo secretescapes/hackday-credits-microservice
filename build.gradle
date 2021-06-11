@@ -1,3 +1,6 @@
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+
 buildscript {
     repositories {
         maven { url "https://repo.grails.org/grails/core" }
@@ -6,6 +9,7 @@ buildscript {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "org.grails.plugins:hibernate5:7.0.4"
         classpath "org.grails.plugins:views-gradle:2.0.2"
+		classpath 'com.bmuschko:gradle-docker-plugin:6.0.0'
     }
 }
 
@@ -14,9 +18,10 @@ group "com.secretescapes.credits"
 
 apply plugin:"eclipse"
 apply plugin:"idea"
-apply plugin:"war"
+//apply plugin:"war"
 apply plugin:"org.grails.grails-web"
 apply plugin:"org.grails.plugins.views-json"
+apply plugin:"com.bmuschko.docker-remote-api"
 
 repositories {
     maven { url "https://repo.grails.org/grails/core" }
@@ -91,4 +96,43 @@ tasks.withType(GroovyCompile) {
     configure(groovyOptions) {
         forkOptions.jvmArgs = ['-Xmx1024m']
     }
+}
+
+ext {
+	dockerTag = "${project.name}:${project.version}".toLowerCase()
+	dockerBuildDir = mkdir("${buildDir}/docker")
+}
+task prepareDocker(type: Copy, dependsOn: assemble) {
+	description = 'Copy files from src/main/docker and application jar to Docker temporal build directory'
+	group = 'Docker'
+
+	from 'src/main/docker'
+	from project.jar
+
+	into dockerBuildDir
+}
+task createDockerfile(type: Dockerfile, dependsOn: prepareDocker) {
+	description = 'Create a Dockerfile file'
+	group = 'Docker'
+
+	destFile = project.file("${dockerBuildDir}/Dockerfile")
+
+	from 'openjdk:8u151-jdk-alpine'
+
+	exposePort 8080
+
+	workingDir '/app'
+
+	copyFile jar.archiveName, 'application.jar'
+	copyFile 'app-entrypoint.sh', 'app-entrypoint.sh'
+	runCommand 'chmod +x app-entrypoint.sh'
+
+	entryPoint '/app/app-entrypoint.sh'
+}
+task buildImage(type: DockerBuildImage, dependsOn: createDockerfile) {
+	description = 'Create Docker image to run the Grails application'
+	group = 'Docker'
+
+	inputDir = file(dockerBuildDir)
+	images.add(dockerTag)
 }
