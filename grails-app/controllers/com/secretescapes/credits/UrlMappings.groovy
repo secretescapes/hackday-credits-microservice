@@ -11,7 +11,10 @@ class UrlMappings {
         patch "/$controller/$id(.$format)?"(action:"patch")
 
         "/"(controller: 'application', action:'index')
-		"/credit/redeemCredit"(controller: "credit", action: "redeemCredit")
+	    "/credit/redeemCredit"(controller: "credit", action: "redeemCredit")
+
+	    get "/credits"(controller: "credit", action: "index")
+	    post  "/redeemCredit"(controller: "credit", action: "redeemCredit")
         "500"(view: '/error')
         "404"(view: '/notFound')
     }
