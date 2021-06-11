@@ -18,7 +18,8 @@ Run from command line in project directory:
 `docker-compose start;` #initiates dev MySQL db
 `grails run-app` #starts an application
 
-### Production on AWS
+### Docker
+`./gradlew buildImage` generates a docker image.
 
 ...
 
