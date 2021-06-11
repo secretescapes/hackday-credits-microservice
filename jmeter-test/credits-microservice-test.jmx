@@ -27,28 +27,6 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <com.googlecode.jmeter.plugins.webdriver.config.ChromeDriverConfig guiclass="com.googlecode.jmeter.plugins.webdriver.config.gui.ChromeDriverConfigGui" testclass="com.googlecode.jmeter.plugins.webdriver.config.ChromeDriverConfig" testname="jp@gc - Chrome Driver Config" enabled="false">
-          <stringProp name="WebDriverConfig.proxy_type">SYSTEM</stringProp>
-          <stringProp name="WebDriverConfig.proxy_pac_url"></stringProp>
-          <stringProp name="WebDriverConfig.http_host"></stringProp>
-          <intProp name="WebDriverConfig.http_port">8080</intProp>
-          <boolProp name="WebDriverConfig.use_http_for_all_protocols">true</boolProp>
-          <stringProp name="WebDriverConfig.https_host"></stringProp>
-          <intProp name="WebDriverConfig.https_port">8080</intProp>
-          <stringProp name="WebDriverConfig.ftp_host"></stringProp>
-          <intProp name="WebDriverConfig.ftp_port">8080</intProp>
-          <stringProp name="WebDriverConfig.socks_host"></stringProp>
-          <intProp name="WebDriverConfig.socks_port">8080</intProp>
-          <stringProp name="WebDriverConfig.no_proxy">localhost</stringProp>
-          <boolProp name="WebDriverConfig.maximize_browser">true</boolProp>
-          <boolProp name="WebDriverConfig.reset_per_iteration">false</boolProp>
-          <boolProp name="WebDriverConfig.dev_mode">false</boolProp>
-          <stringProp name="ChromeDriverConfig.chromedriver_path">/home/ms/programs/portable/apache-jmeter-5.2/chromedrivers/chromedriver_linux64/chromedriver</stringProp>
-          <boolProp name="ChromeDriverConfig.android_enabled">false</boolProp>
-          <boolProp name="ChromeDriverConfig.headless_enabled">false</boolProp>
-          <boolProp name="ChromeDriverConfig.insecurecerts_enabled">true</boolProp>
-        </com.googlecode.jmeter.plugins.webdriver.config.ChromeDriverConfig>
-        <hashTree/>
         <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
