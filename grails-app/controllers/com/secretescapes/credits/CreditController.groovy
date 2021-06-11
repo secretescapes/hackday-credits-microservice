@@ -2,6 +2,7 @@ package com.secretescapes.credits
 
 import com.secretescapes.credits.commands.RedeemCreditCommand
 import com.secretescapes.credits.commands.exceptions.InsufficientAvailableCredit
+import grails.gorm.transactions.Transactional
 import org.springframework.http.HttpStatus
 
 class CreditController {
@@ -30,6 +31,7 @@ class CreditController {
 		}
 	}
 
+	@Transactional
 	def redeemCredit(RedeemCreditCommand command) {
 		User user
 		try {
